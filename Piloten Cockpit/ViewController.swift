@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  Piloten Cockpit
+//  wkwebview
 //
 //  Created by Michael Sommer
 //

@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Piloten Cockpit
 //
-//  Created by Administrator on 15.04.23.
+//  Created by Michael Sommer on 15.04.23.
 //
 
 import UIKit

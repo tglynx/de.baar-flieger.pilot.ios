@@ -16,6 +16,9 @@
 		C33D5E9829EB1B5B00D4EE22 /* Piloten_CockpitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5E9729EB1B5B00D4EE22 /* Piloten_CockpitTests.swift */; };
 		C33D5EA229EB1B5B00D4EE22 /* Piloten_CockpitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5EA129EB1B5B00D4EE22 /* Piloten_CockpitUITests.swift */; };
 		C33D5EA429EB1B5B00D4EE22 /* Piloten_CockpitUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5EA329EB1B5B00D4EE22 /* Piloten_CockpitUITestsLaunchTests.swift */; };
+		C3440E8829FAD924005C09B7 /* error.html in Resources */ = {isa = PBXBuildFile; fileRef = C3440E8729FAD924005C09B7 /* error.html */; };
+		C3440E8D29FBBF50005C09B7 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = C3440E8C29FBBF50005C09B7 /* Reachability */; };
+		C3440E8F29FBEE0C005C09B7 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C3440E8E29FBEE0B005C09B7 /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,10 @@
 		C33D5E9D29EB1B5B00D4EE22 /* Piloten CockpitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Piloten CockpitUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C33D5EA129EB1B5B00D4EE22 /* Piloten_CockpitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piloten_CockpitUITests.swift; sourceTree = "<group>"; };
 		C33D5EA329EB1B5B00D4EE22 /* Piloten_CockpitUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piloten_CockpitUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C3440E8729FAD924005C09B7 /* error.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = error.html; sourceTree = "<group>"; };
+		C3440E8A29FBBDE9005C09B7 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = "../../Reachability.swift-5.1.0/Sources/Reachability.swift"; sourceTree = "<group>"; };
+		C3440E8B29FBBE53005C09B7 /* Reachability.swift-5.1.0 */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "Reachability.swift-5.1.0"; path = "../../Reachability.swift-5.1.0"; sourceTree = "<group>"; };
+		C3440E8E29FBEE0B005C09B7 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C3440E8D29FBBF50005C09B7 /* Reachability in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +91,7 @@
 				C33D5E9629EB1B5B00D4EE22 /* Piloten CockpitTests */,
 				C33D5EA029EB1B5B00D4EE22 /* Piloten CockpitUITests */,
 				C33D5E7E29EB1B5500D4EE22 /* Products */,
+				C3440E8929FBBDE6005C09B7 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +108,7 @@
 		C33D5E7F29EB1B5500D4EE22 /* Piloten Cockpit */ = {
 			isa = PBXGroup;
 			children = (
+				C3440E8629FAD8C1005C09B7 /* assets */,
 				C33D5E8029EB1B5500D4EE22 /* AppDelegate.swift */,
 				C33D5E8229EB1B5500D4EE22 /* SceneDelegate.swift */,
 				C33D5E8429EB1B5500D4EE22 /* ViewController.swift */,
@@ -127,6 +137,24 @@
 			path = "Piloten CockpitUITests";
 			sourceTree = "<group>";
 		};
+		C3440E8629FAD8C1005C09B7 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				C3440E8E29FBEE0B005C09B7 /* logo.png */,
+				C3440E8729FAD924005C09B7 /* error.html */,
+			);
+			path = assets;
+			sourceTree = "<group>";
+		};
+		C3440E8929FBBDE6005C09B7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3440E8B29FBBE53005C09B7 /* Reachability.swift-5.1.0 */,
+				C3440E8A29FBBDE9005C09B7 /* Reachability.swift */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -143,6 +171,9 @@
 			dependencies = (
 			);
 			name = "Piloten Cockpit";
+			packageProductDependencies = (
+				C3440E8C29FBBF50005C09B7 /* Reachability */,
+			);
 			productName = "Piloten Cockpit";
 			productReference = C33D5E7D29EB1B5500D4EE22 /* Piloten Cockpit.app */;
 			productType = "com.apple.product-type.application";
@@ -232,8 +263,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C33D5E8D29EB1B5A00D4EE22 /* LaunchScreen.storyboard in Resources */,
+				C3440E8F29FBEE0C005C09B7 /* logo.png in Resources */,
 				C33D5E8A29EB1B5A00D4EE22 /* Assets.xcassets in Resources */,
 				C33D5E8829EB1B5500D4EE22 /* Main.storyboard in Resources */,
+				C3440E8829FAD924005C09B7 /* error.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,6 +473,7 @@
 				DEVELOPMENT_TEAM = 8T4ZTXT2JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Piloten Cockpit/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Baar-Flieger";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -469,6 +503,7 @@
 				DEVELOPMENT_TEAM = 8T4ZTXT2JH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Piloten Cockpit/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Baar-Flieger";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = Main.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -600,6 +635,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C3440E8C29FBBF50005C09B7 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Reachability;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C33D5E7529EB1B5400D4EE22 /* Project object */;
 }

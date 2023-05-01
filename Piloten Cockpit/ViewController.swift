@@ -15,7 +15,8 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     let reachability = try! Reachability()
     
-    //@IBOutlet weak var standbyLabel: UILabel!
+    // Declare a UIActivityIndicatorView property
+    var activityIndicatorView: UIActivityIndicatorView!
     
     override func loadView() {
         
@@ -39,6 +40,18 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Create and configure the activity indicator view
+        activityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityIndicatorView.color = .gray
+        activityIndicatorView.hidesWhenStopped = true
+        view.addSubview(activityIndicatorView)
+        activityIndicatorView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
@@ -50,11 +63,11 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
-        //standbyLabel.isHidden = false
+        activityIndicatorView.startAnimating()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        //standbyLabel.isHidden = true
+        activityIndicatorView.stopAnimating()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

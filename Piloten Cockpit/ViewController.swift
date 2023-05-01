@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  wkwebview
+//  Piloten Cockpit
 //
 //  Created by Michael Sommer
 //
@@ -15,14 +15,13 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
 
     let reachability = try! Reachability()
     
+    //@IBOutlet weak var standbyLabel: UILabel!
+    
     override func loadView() {
         
         let webConfiguration = WKWebViewConfiguration()
         
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        
-        webView.uiDelegate = self
-        webView.navigationDelegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged), name: .reachabilityChanged, object: reachability)
         
@@ -40,6 +39,9 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        webView.uiDelegate = self
+        webView.navigationDelegate = self
+        
         let url = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
@@ -47,6 +49,24 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         //view.backgroundColor = .red
     }
 
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        //standbyLabel.isHidden = false
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        //standbyLabel.isHidden = true
+    }
+    
+    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+        if let url = navigationAction.request.url, url.absoluteString == "https://pilot.baar-flieger.de/builder/apps" {
+            let newURL = URL(string: "https://pilot.baar-flieger.de/app/pilots/home")!
+            webView.load(URLRequest(url: newURL))
+            decisionHandler(.cancel)
+        } else {
+            decisionHandler(.allow)
+        }
+    }
+    
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
         NSLog("did fail provisional navigation %@", error as NSError)
         let url = Bundle.main.url(forResource: "error", withExtension: "html")!

@@ -72,7 +72,7 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let url = navigationAction.request.url, url.absoluteString == "https://pilot.baar-flieger.de/builder/apps" {
-            let newURL = URL(string: "https://pilot.baar-flieger.de/app/pilots/home")!
+            let newURL = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
             webView.load(URLRequest(url: newURL))
             decisionHandler(.cancel)
         } else {

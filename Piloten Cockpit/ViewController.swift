@@ -12,7 +12,8 @@ import Reachability
 class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
-
+    var backButton: UIButton!
+    
     let reachability = try! Reachability()
     
     // Declare a UIActivityIndicatorView property
@@ -51,7 +52,6 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             activityIndicatorView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
@@ -59,15 +59,58 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
-        //view.backgroundColor = .red
+        // Create the back button
+        backButton = UIButton(type: .custom)
+        backButton.setTitle("<", for: .normal)
+        backButton.titleLabel?.font = UIFont.systemFont(ofSize: 17.0)
+        backButton.setTitleColor(.darkGray, for: .normal)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(backButton)
+        
+        // Position the back button in the upper-left corner of the view
+        let guide = view.safeAreaLayoutGuide
+        NSLayoutConstraint.activate([
+            backButton.topAnchor.constraint(equalTo: guide.topAnchor, constant: 22),
+            backButton.leadingAnchor.constraint(equalTo: guide.leadingAnchor, constant: 22),
+            backButton.widthAnchor.constraint(equalToConstant: 30),
+            backButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        // Customize the button's appearance
+        let lightGrayColor = UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 0.7)
+        backButton.backgroundColor = lightGrayColor
+        backButton.layer.cornerRadius = 6.0
+        backButton.layer.borderWidth = 1.0
+        backButton.layer.borderColor = UIColor.clear.cgColor
+
+        // Set initial visibility of the back button
+        updateBackButtonVisibility()
+
     }
 
+    @objc func backButtonTapped() {
+        // Handle the back button tap event here
+        webView.goBack()
+    }
+    
+    func updateBackButtonVisibility() {
+        if let url = webView.url, url.absoluteString.hasPrefix("https://pilot.baar-flieger.de/files") {
+            backButton.isHidden = !webView.canGoBack
+        } else {
+            backButton.isHidden = true
+        }
+    }
+    
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         activityIndicatorView.startAnimating()
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityIndicatorView.stopAnimating()
+        
+        // Update the visibility of the back button
+        updateBackButtonVisibility()
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

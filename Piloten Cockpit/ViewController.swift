@@ -111,6 +111,33 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         
         // Update the visibility of the back button
         updateBackButtonVisibility()
+
+        // js code to extract the website cookie to look for a logged in user
+        let script = """
+        try {
+            document.cookie;
+        } catch (e) {
+            e.toString();
+        }
+        """
+        
+        if let currentURL = webView.url, currentURL.absoluteString == "https://pilot.baar-flieger.de/app/benutzer" {
+            webView.evaluateJavaScript(script) { (result, error) in
+                if let cookie = result as? String {
+                    if cookie.contains("budibase:auth") {
+                        // User is logged in, navigate to the app URL
+                        let newURL = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
+                        webView.load(URLRequest(url: newURL))
+                    } else {
+                        // Log the returned JavaScript result for further investigation
+                        print("JavaScript returned: \(cookie)")
+                    }
+                } else if let jsError = error {
+                    // Log any Swift-side errors that occurred during JavaScript evaluation
+                    print("JavaScript evaluation error: \(jsError)")
+                }
+            }
+        }
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {

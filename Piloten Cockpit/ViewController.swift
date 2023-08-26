@@ -55,7 +55,9 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
-        let url = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
+        webView.alpha = 0
+        
+        let url = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
         webView.load(URLRequest(url: url))
         webView.allowsBackForwardNavigationGestures = true
         
@@ -109,40 +111,36 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         activityIndicatorView.stopAnimating()
         
+        print("Current URL: \(webView.url?.absoluteString ?? "Unknown")")
+        
         // Update the visibility of the back button
         updateBackButtonVisibility()
 
-        // js code to extract the website cookie to look for a logged in user
-        let script = """
-        try {
-            document.cookie;
-        } catch (e) {
-            e.toString();
-        }
-        """
-        
-        if let currentURL = webView.url, currentURL.absoluteString == "https://pilot.baar-flieger.de/app/benutzer" {
+        if let currentURL = webView.url, currentURL.absoluteString == "https://pilot.baar-flieger.de/app/piloten" {
+            
+            let script = "document.cookie;"
             webView.evaluateJavaScript(script) { (result, error) in
-                if let cookie = result as? String {
-                    if cookie.contains("budibase:auth") {
-                        // User is logged in, navigate to the app URL
-                        let newURL = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
-                        webView.load(URLRequest(url: newURL))
-                    } else {
-                        // Log the returned JavaScript result for further investigation
-                        print("JavaScript returned: \(cookie)")
-                    }
-                } else if let jsError = error {
-                    // Log any Swift-side errors that occurred during JavaScript evaluation
-                    print("JavaScript evaluation error: \(jsError)")
+                if let cookie = result as? String, !cookie.contains("budibase:auth") {
+                    // User is not logged in, navigate to the Custom Login app
+                    let newURL = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
+                    webView.load(URLRequest(url: newURL))
+                } else {
+                    webView.alpha = 1
                 }
             }
+            
+        } else {
+            webView.alpha = 1
         }
+            
     }
     
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        if let url = navigationAction.request.url, url.absoluteString == "https://pilot.baar-flieger.de/builder/apps" {
-            let newURL = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
+        
+        print("decidePolicyFor URL: \(navigationAction.request.url?.absoluteString ?? "Unknown")")
+        
+        if let url = navigationAction.request.url, url.absoluteString.contains("/builder/") {
+            let newURL = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
             webView.load(URLRequest(url: newURL))
             decisionHandler(.cancel)
         } else {

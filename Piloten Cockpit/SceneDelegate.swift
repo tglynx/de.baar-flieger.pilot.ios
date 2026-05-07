@@ -7,6 +7,12 @@
 
 import UIKit
 
+private let widgetDeepLinkScheme = "pilotencockpit"
+private let widgetDeepLinkHost = "webcam"
+private let widgetDeepLinkPath = "/sued"
+private let widgetNotificationName = Notification.Name("FuerstenbergSuedWidgetOpenURL")
+private let webcamPageURL = URL(string: "https://pilot.baar-flieger.de/app/piloten#/webcams")!
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
@@ -17,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
+        handle(urlContexts: connectionOptions.urlContexts)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,6 +54,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        handle(urlContexts: URLContexts)
+    }
+
+    private func handle(urlContexts: Set<UIOpenURLContext>) {
+        guard let url = urlContexts.first?.url else {
+            return
+        }
+
+        guard url.scheme?.lowercased() == widgetDeepLinkScheme,
+              url.host?.lowercased() == widgetDeepLinkHost,
+              url.path.lowercased() == widgetDeepLinkPath else {
+            return
+        }
+
+        NotificationCenter.default.post(name: widgetNotificationName, object: webcamPageURL)
+    }
 
 }
-

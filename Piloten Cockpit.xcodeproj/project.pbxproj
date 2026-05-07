@@ -3,10 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		704615F62FAD1FF5008116A3 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704615F52FAD1FF5008116A3 /* WidgetKit.framework */; };
+		704615F82FAD1FF5008116A3 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 704615F72FAD1FF5008116A3 /* SwiftUI.framework */; };
+		704616032FAD1FF6008116A3 /* FuerstenbergSuedWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 704615F32FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C33D5E8129EB1B5500D4EE22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5E8029EB1B5500D4EE22 /* AppDelegate.swift */; };
 		C33D5E8329EB1B5500D4EE22 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5E8229EB1B5500D4EE22 /* SceneDelegate.swift */; };
 		C33D5E8529EB1B5500D4EE22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C33D5E8429EB1B5500D4EE22 /* ViewController.swift */; };
@@ -22,6 +25,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		704616012FAD1FF6008116A3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C33D5E7529EB1B5400D4EE22 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 704615F22FAD1FF5008116A3;
+			remoteInfo = FuerstenbergSuedWidgetExtension;
+		};
 		C33D5E9429EB1B5B00D4EE22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C33D5E7529EB1B5400D4EE22 /* Project object */;
@@ -38,7 +48,24 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		704616042FAD1FF6008116A3 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				704616032FAD1FF6008116A3 /* FuerstenbergSuedWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		704615F32FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FuerstenbergSuedWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		704615F52FAD1FF5008116A3 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		704615F72FAD1FF5008116A3 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		C33D5E7D29EB1B5500D4EE22 /* Piloten Cockpit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Piloten Cockpit.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C33D5E8029EB1B5500D4EE22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C33D5E8229EB1B5500D4EE22 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -58,7 +85,30 @@
 		C378A30C2A6ADAF200FC97D8 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		704616072FAD1FF6008116A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 704615F22FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		704615F92FAD1FF5008116A3 /* FuerstenbergSuedWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (704616072FAD1FF6008116A3 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = FuerstenbergSuedWidget; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
+		704615F02FAD1FF5008116A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				704615F82FAD1FF5008116A3 /* SwiftUI.framework in Frameworks */,
+				704615F62FAD1FF5008116A3 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C33D5E7A29EB1B5500D4EE22 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -84,12 +134,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		704615F42FAD1FF5008116A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				704615F52FAD1FF5008116A3 /* WidgetKit.framework */,
+				704615F72FAD1FF5008116A3 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		C33D5E7429EB1B5400D4EE22 = {
 			isa = PBXGroup;
 			children = (
 				C33D5E7F29EB1B5500D4EE22 /* Piloten Cockpit */,
 				C33D5E9629EB1B5B00D4EE22 /* Piloten CockpitTests */,
 				C33D5EA029EB1B5B00D4EE22 /* Piloten CockpitUITests */,
+				704615F92FAD1FF5008116A3 /* FuerstenbergSuedWidget */,
+				704615F42FAD1FF5008116A3 /* Frameworks */,
 				C33D5E7E29EB1B5500D4EE22 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -100,6 +161,7 @@
 				C33D5E7D29EB1B5500D4EE22 /* Piloten Cockpit.app */,
 				C33D5E9329EB1B5B00D4EE22 /* Piloten CockpitTests.xctest */,
 				C33D5E9D29EB1B5B00D4EE22 /* Piloten CockpitUITests.xctest */,
+				704615F32FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,6 +210,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		704615F22FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 704616082FAD1FF6008116A3 /* Build configuration list for PBXNativeTarget "FuerstenbergSuedWidgetExtension" */;
+			buildPhases = (
+				704615EF2FAD1FF5008116A3 /* Sources */,
+				704615F02FAD1FF5008116A3 /* Frameworks */,
+				704615F12FAD1FF5008116A3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				704615F92FAD1FF5008116A3 /* FuerstenbergSuedWidget */,
+			);
+			name = FuerstenbergSuedWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = FuerstenbergSuedWidgetExtension;
+			productReference = 704615F32FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		C33D5E7C29EB1B5500D4EE22 /* Piloten Cockpit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C33D5EA729EB1B5B00D4EE22 /* Build configuration list for PBXNativeTarget "Piloten Cockpit" */;
@@ -155,10 +239,12 @@
 				C33D5E7929EB1B5500D4EE22 /* Sources */,
 				C33D5E7A29EB1B5500D4EE22 /* Frameworks */,
 				C33D5E7B29EB1B5500D4EE22 /* Resources */,
+				704616042FAD1FF6008116A3 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				704616022FAD1FF6008116A3 /* PBXTargetDependency */,
 			);
 			name = "Piloten Cockpit";
 			packageProductDependencies = (
@@ -211,9 +297,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 2640;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
+					704615F22FAD1FF5008116A3 = {
+						CreatedOnToolsVersion = 26.4.1;
+					};
 					C33D5E7C29EB1B5500D4EE22 = {
 						CreatedOnToolsVersion = 14.3;
 					};
@@ -246,11 +335,19 @@
 				C33D5E7C29EB1B5500D4EE22 /* Piloten Cockpit */,
 				C33D5E9229EB1B5B00D4EE22 /* Piloten CockpitTests */,
 				C33D5E9C29EB1B5B00D4EE22 /* Piloten CockpitUITests */,
+				704615F22FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		704615F12FAD1FF5008116A3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C33D5E7B29EB1B5500D4EE22 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -280,6 +377,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		704615EF2FAD1FF5008116A3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C33D5E7929EB1B5500D4EE22 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -310,6 +414,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		704616022FAD1FF6008116A3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 704615F22FAD1FF5008116A3 /* FuerstenbergSuedWidgetExtension */;
+			targetProxy = 704616012FAD1FF6008116A3 /* PBXContainerItemProxy */;
+		};
 		C33D5E9529EB1B5B00D4EE22 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C33D5E7C29EB1B5500D4EE22 /* Piloten Cockpit */;
@@ -344,6 +453,75 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		704616052FAD1FF6008116A3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F885G7363L;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FuerstenbergSuedWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FuerstenbergSuedWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.baar-flieger.pilot.ios.FuerstenbergSuedWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		704616062FAD1FF6008116A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = F885G7363L;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FuerstenbergSuedWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FuerstenbergSuedWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "de.baar-flieger.pilot.ios.FuerstenbergSuedWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		C33D5EA529EB1B5B00D4EE22 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -617,6 +795,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		704616082FAD1FF6008116A3 /* Build configuration list for PBXNativeTarget "FuerstenbergSuedWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				704616052FAD1FF6008116A3 /* Debug */,
+				704616062FAD1FF6008116A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C33D5E7829EB1B5400D4EE22 /* Build configuration list for PBXProject "Piloten Cockpit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

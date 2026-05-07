@@ -9,11 +9,15 @@ import UIKit
 import WebKit
 import Reachability
 
+private let widgetNotificationName = Notification.Name("FuerstenbergSuedWidgetOpenURL")
+
 class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     
     var webView: WKWebView!
     var backButton: UIButton!
     
+    private let defaultURL = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
+    private let loginURL = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
     let reachability = try! Reachability()
     
     // Declare a UIActivityIndicatorView property
@@ -56,9 +60,9 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         webView.navigationDelegate = self
         
         webView.alpha = 0
-        
-        let url = URL(string: "https://pilot.baar-flieger.de/app/piloten")!
-        webView.load(URLRequest(url: url))
+        NotificationCenter.default.addObserver(self, selector: #selector(handleWidgetDeepLinkNotification(_:)), name: widgetNotificationName, object: nil)
+
+        load(url: defaultURL)
         webView.allowsBackForwardNavigationGestures = true
         
         // Create the back button
@@ -116,14 +120,13 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         // Update the visibility of the back button
         updateBackButtonVisibility()
 
-        if let currentURL = webView.url, currentURL.absoluteString == "https://pilot.baar-flieger.de/app/piloten" {
+        if let currentURL = webView.url, currentURL == defaultURL {
             
             let script = "document.cookie;"
             webView.evaluateJavaScript(script) { (result, error) in
                 if let cookie = result as? String, !cookie.contains("budibase:auth") {
                     // User is not logged in, navigate to the Custom Login app
-                    let newURL = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
-                    webView.load(URLRequest(url: newURL))
+                    self.load(url: self.loginURL)
                 } else {
                     webView.alpha = 1
                 }
@@ -140,8 +143,7 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
         print("decidePolicyFor URL: \(navigationAction.request.url?.absoluteString ?? "Unknown")")
         
         if let url = navigationAction.request.url, url.absoluteString.contains("/builder/") {
-            let newURL = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
-            webView.load(URLRequest(url: newURL))
+            load(url: loginURL)
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
@@ -169,10 +171,21 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
             let url = Bundle.main.url(forResource: "error", withExtension: "html")!
             webView.loadFileURL(url, allowingReadAccessTo: url)
         default:
-            let url = URL(string: "https://pilot.baar-flieger.de/app/benutzer")!
-            webView.load(URLRequest(url: url))
+            load(url: loginURL)
         }
         
+    }
+
+    @objc private func handleWidgetDeepLinkNotification(_ notification: Notification) {
+        guard let url = notification.object as? URL else {
+            return
+        }
+
+        load(url: url)
+    }
+
+    private func load(url: URL) {
+        webView.load(URLRequest(url: url))
     }
     
     deinit {
@@ -180,4 +193,3 @@ class ViewController: UIViewController, WKUIDelegate, WKNavigationDelegate {
     }
     
 }
-

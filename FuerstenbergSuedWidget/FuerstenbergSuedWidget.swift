@@ -18,6 +18,8 @@ private enum FuerstenbergSuedWidgetConfiguration {
     static let deepLinkURL = URL(string: "pilotencockpit://webcam/sued")!
     static let cacheFileName = "fuerstenberg-sued-current.jpg"
     static let maxPixelDimension = 1100
+    static let topCropRatio: CGFloat = 0.055
+    static let bottomCropRatio: CGFloat = 0.065
 }
 
 struct FuerstenbergSuedEntry: TimelineEntry {
@@ -57,36 +59,117 @@ struct FuerstenbergSuedProvider: TimelineProvider {
 }
 
 struct FuerstenbergSuedWidgetEntryView: View {
+    @Environment(\.widgetFamily) private var family
     let entry: FuerstenbergSuedEntry
 
     var body: some View {
-        ZStack {
-            if let image = entry.image {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                LinearGradient(
-                    colors: [Color.gray.opacity(0.85), Color.gray.opacity(0.55)],
-                    startPoint: .top,
-                    endPoint: .bottom
-                )
+        GeometryReader { geometry in
+            ZStack(alignment: .topLeading) {
+                imageContent
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+                    .clipped()
 
-                VStack(spacing: 8) {
-                    Image(systemName: "camera.fill")
-                        .font(.title2)
-                    Text(FuerstenbergSuedWidgetConfiguration.displayName)
-                        .font(.caption)
-                        .multilineTextAlignment(.center)
-                }
-                .foregroundColor(.white)
-                .padding(12)
+                labelBadge
+                    .fixedSize()
+                    .padding(.leading, badgeInsets(in: geometry.size).leading)
+                    .padding(.top, badgeInsets(in: geometry.size).top)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .clipped()
         .widgetURL(FuerstenbergSuedWidgetConfiguration.deepLinkURL)
         .modifier(FuerstenbergSuedWidgetBackground())
+    }
+
+    @ViewBuilder
+    private var imageContent: some View {
+        ZStack {
+            ZStack {
+                if let image = entry.image {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                } else {
+                    LinearGradient(
+                        colors: [Color.gray.opacity(0.85), Color.gray.opacity(0.55)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+
+                    VStack(spacing: 8) {
+                        Image(systemName: "camera.fill")
+                            .font(.title2)
+                        Text(FuerstenbergSuedWidgetConfiguration.displayName)
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                    }
+                    .foregroundColor(.white)
+                    .padding(12)
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .clipped()
+        }
+    }
+
+    @ViewBuilder
+    private var labelBadge: some View {
+        switch family {
+        case .systemSmall:
+            Text("Sued")
+                .font(.system(size: 10, weight: .semibold))
+                .lineLimit(1)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(.black.opacity(0.28), in: Capsule())
+                .foregroundColor(.white)
+        case .systemMedium, .systemLarge:
+            HStack(spacing: 5) {
+                Image(systemName: "camera.fill")
+                    .font(.system(size: 10, weight: .semibold))
+                ViewThatFits {
+                    Text("Fuerstenberg Sued")
+                    Text("Webcam Sued")
+                    Text("Sued")
+                }
+                .font(.system(size: 11, weight: .semibold))
+                .lineLimit(1)
+            }
+            .padding(.horizontal, 9)
+            .padding(.vertical, 5)
+            .background(.black.opacity(0.28), in: Capsule())
+            .foregroundColor(.white)
+        default:
+            EmptyView()
+        }
+    }
+
+    private func badgeInsets(in size: CGSize) -> EdgeInsets {
+        let horizontalInset = max(18, size.width * horizontalInsetRatio)
+        let verticalInset = max(18, size.height * verticalInsetRatio)
+
+        return EdgeInsets(top: verticalInset, leading: horizontalInset, bottom: 0, trailing: 0)
+    }
+
+    private var horizontalInsetRatio: CGFloat {
+        switch family {
+        case .systemSmall:
+            return 0.05
+        case .systemMedium, .systemLarge:
+            return 0.04
+        default:
+            return 0.04
+        }
+    }
+
+    private var verticalInsetRatio: CGFloat {
+        switch family {
+        case .systemSmall:
+            return 0.05
+        case .systemMedium, .systemLarge:
+            return 0.045
+        default:
+            return 0.045
+        }
     }
 }
 
@@ -101,6 +184,7 @@ struct FuerstenbergSuedWidget: Widget {
         .configurationDisplayName(FuerstenbergSuedWidgetConfiguration.displayName)
         .description(FuerstenbergSuedWidgetConfiguration.description)
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+        .contentMarginsDisabled()
     }
 }
 
@@ -170,11 +254,35 @@ private final class FuerstenbergSuedImageStore {
         }
 
         let image = UIImage(cgImage: cgImage)
-        guard let jpegData = image.jpegData(compressionQuality: 0.82) else {
+        let croppedImage = cropOverlayBars(from: image) ?? image
+        guard let jpegData = croppedImage.jpegData(compressionQuality: 0.82) else {
             return nil
         }
 
         return jpegData
+    }
+
+    private func cropOverlayBars(from image: UIImage) -> UIImage? {
+        guard let cgImage = image.cgImage else {
+            return nil
+        }
+
+        let width = CGFloat(cgImage.width)
+        let height = CGFloat(cgImage.height)
+        let topInset = height * FuerstenbergSuedWidgetConfiguration.topCropRatio
+        let bottomInset = height * FuerstenbergSuedWidgetConfiguration.bottomCropRatio
+        let cropHeight = height - topInset - bottomInset
+
+        guard cropHeight > 0 else {
+            return nil
+        }
+
+        let cropRect = CGRect(x: 0, y: topInset, width: width, height: cropHeight).integral
+        guard let croppedCGImage = cgImage.cropping(to: cropRect) else {
+            return nil
+        }
+
+        return UIImage(cgImage: croppedCGImage, scale: image.scale, orientation: image.imageOrientation)
     }
 
     private var cacheURL: URL? {
